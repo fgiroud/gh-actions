@@ -1,0 +1,9 @@
+name: Test CI
+
+on: [pull_request_target]
+
+jobs:
+  build:
+    steps:
+    - name: Build and test with Maven
+      run: ls -lah
