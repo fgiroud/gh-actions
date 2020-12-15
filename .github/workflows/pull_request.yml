@@ -8,3 +8,5 @@ jobs:
     steps:
     - name: Build and test with Maven
       run: ls -lah
+    - name: Build and test with Maven
+      run: echo "${{ secrets.A_SECRET }}"
