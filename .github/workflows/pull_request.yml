@@ -4,6 +4,7 @@ on: [pull_request_target]
 
 jobs:
   build:
+    runs-on: ubuntu-latest
     steps:
     - name: Build and test with Maven
       run: ls -lah
