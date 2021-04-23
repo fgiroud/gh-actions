@@ -17,7 +17,7 @@ jobs:
     strategy:
       matrix: ${{fromJSON(needs.prepare_ui_test_matrix.outputs.matrix)}}
     steps:
-      - name: ${{ matrix.browser }}-${{ matrix.machine }}-t
+      - name: ${{ matrix.browser }}-${{ matrix.machine }}-test2
         run: echo I am running on machine "${{ matrix.browser }}"
 
   # prepare_ui_tests_matrix:
