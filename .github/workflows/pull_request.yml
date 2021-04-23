@@ -10,14 +10,14 @@ jobs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - id: set-matrix
-        run: if [ -z "$CYPRESS_PROJECT_ID" ]; then echo "::set-output name=matrix::{\"browser\":[\"nope1\", \"nope2\"]}"; else echo "::set-output name=matrix::{\"browser\":[\"chrome\", \"edge\"]}"; fi
+        run: if [ -z "$CYPRESS_PROJECT_ID" ]; then echo "::set-output name=matrix::{\"browser\":[\"chrome\", \"edge\"], \"machines\":[1]}"; else echo "::set-output name=matrix::{\"browser\":[\"chrome\", \"edge\"], , \"machines\":[1,2,3]}"; fi
   job2:
     needs: job1
     runs-on: ubuntu-latest
     strategy:
       matrix: ${{fromJSON(needs.job1.outputs.matrix)}}
     steps:
-      - name: ECHO
+      - name: ${{ matrix.browser }}-${{ matrix.machine }}
         run: echo I am running on machine "${{ matrix.browser }}"
 
   # prepare_ui_tests_matrix:
