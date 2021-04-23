@@ -10,7 +10,8 @@ jobs:
         browser: ['chrome', 'edge']
         machines: [1, 2, 3]
     runs-on: ubuntu-latest
-    if: ${{ matrix.browser == 'chrome' }}
+
     steps:
       - name: ECHO
+        if: ${{ matrix.browser == 'chrome' }}
         run: echo I am running on machine "${{ matrix.machine }}, for browser ${{ matrix.browser }}"
