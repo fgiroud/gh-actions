@@ -1,10 +1,9 @@
 name: Test CI
 
 on: [push]
-
+env:
+  CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
 jobs:
-  env:
-    CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
   job1:
     runs-on: ubuntu-latest
     outputs:
