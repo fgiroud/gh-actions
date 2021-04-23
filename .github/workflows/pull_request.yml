@@ -3,15 +3,26 @@ name: Test CI
 on: [push]
 
 jobs:
+  prepare_ui_tests_matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - id: set-matrix
+        if secret
+          matrix 3 
+        else
+          matrix 
+        run: echo "::set-output name=matrix::[1,2,3,4]"
+
   ui_tests:
     strategy:
       # fail-fast: false
       matrix:
         browser: ['chrome', 'edge']
-        machines: [1, 2, 3]
+        machines: ${{fromJSON(needs.prepare_ui_tests_matrix.outputs.matrix)}}
     runs-on: ubuntu-latest
 
     steps:
       - name: ECHO
-        if: ${{ matrix.browser == 'chrome' }}
         run: echo I am running on machine "${{ matrix.machine }}, for browser ${{ matrix.browser }}"
