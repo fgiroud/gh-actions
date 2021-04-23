@@ -4,18 +4,18 @@ on: [push]
 env:
   CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
 jobs:
-  job1:
+  prepare_ui_test_matrix:
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - id: set-matrix
         run: if [ -z "$CYPRESS_PROJECT_ID" ]; then echo "::set-output name=matrix::{\"browser\":[\"chrome\", \"edge\"], \"machines\":[1]}"; else echo "::set-output name=matrix::{\"browser\":[\"chrome\", \"edge\"], , \"machines\":[1,2,3]}"; fi
-  job2:
-    needs: job1
+  ui_test:
+    needs: prepare_ui_test_matrix
     runs-on: ubuntu-latest
     strategy:
-      matrix: ${{fromJSON(needs.job1.outputs.matrix)}}
+      matrix: ${{fromJSON(needs.prepare_ui_test_matrix.outputs.matrix)}}
     steps:
       - name: ${{ matrix.browser }}-${{ matrix.machine }}
         run: echo I am running on machine "${{ matrix.browser }}"
