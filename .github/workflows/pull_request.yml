@@ -3,22 +3,36 @@ name: Test CI
 on: [push]
 
 jobs:
-  prepare_ui_tests_matrix:
+  job1:
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - id: set-matrix
-        run: echo "::set-output name=matrix::[1,2,3,4]"
-
-  ui_tests:
-    strategy:
-      # fail-fast: false
-      matrix:
-        browser: ['chrome', 'edge']
-        machines: ${{fromJSON(needs.prepare_ui_tests_matrix.outputs.matrix)}}
+        run: echo "::set-output name=matrix::{\"include\":[{\"project\":\"foo\",\"config\":\"Debug\"},{\"project\":\"bar\",\"config\":\"Release\"}]}"
+  job2:
+    needs: job1
     runs-on: ubuntu-latest
-
+    strategy:
+      matrix: ${{fromJSON(needs.job1.outputs.matrix)}}
     steps:
-      - name: ECHO
-        run: echo I am running on machine "${{ matrix.machine }}, for browser ${{ matrix.browser }}"
+      - run: build
+  prepare_ui_tests_matrix:
+  #   runs-on: ubuntu-latest
+  #   outputs:
+  #     matrix: ${{ steps.set-matrix.outputs.matrix }}
+  #   steps:
+  #     - id: set-matrix
+  #       run: echo "::set-output name=matrix::[1,2,3,4]"
+
+  # ui_tests:
+  #   strategy:
+  #     # fail-fast: false
+  #     matrix:
+  #       browser: ['chrome', 'edge']
+  #       machines: ${{fromJSON(needs.prepare_ui_tests_matrix.outputs.matrix)}}
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #     - name: ECHO
+  #       run: echo I am running on machine "${{ matrix.machine }}, for browser ${{ matrix.browser }}"
