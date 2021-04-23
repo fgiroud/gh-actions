@@ -9,10 +9,6 @@ jobs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - id: set-matrix
-        if secret
-          matrix 3 
-        else
-          matrix 
         run: echo "::set-output name=matrix::[1,2,3,4]"
 
   ui_tests:
