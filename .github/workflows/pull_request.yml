@@ -17,21 +17,5 @@ jobs:
     strategy:
       matrix: ${{fromJSON(needs.prepare_ui_test_matrix.outputs.matrix)}}
     steps:
-      - name: ${{ matrix.browser }}-${{ matrix.machine }}-test2
+      - name: ${{ matrix.browser }}-${{ matrix.machine }}-test3
         run: echo I am running on machine "${{ matrix.browser }}"
-
-  # prepare_ui_tests_matrix:
-  #   runs-on: ubuntu-latest
-  #   outputs:
-  #     matrix: ${{ steps.set-matrix.outputs.matrix }}
-  #   steps:
-  #     - id: set-matrix
-  #       run: echo "::set-output name=matrix::[1,2,3,4]"
-
-  # ui_tests:
-  #   strategy:
-  #     # fail-fast: false
-  #     matrix:
-  #       browser: ['chrome', 'edge']
-  #       machines: ${{fromJSON(needs.prepare_ui_tests_matrix.outputs.matrix)}}
-  #   runs-on: ubuntu-latest
