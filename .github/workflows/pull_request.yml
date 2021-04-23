@@ -17,7 +17,7 @@ jobs:
       matrix: ${{fromJSON(needs.job1.outputs.matrix)}}
     steps:
       - run: build
-  prepare_ui_tests_matrix:
+  # prepare_ui_tests_matrix:
   #   runs-on: ubuntu-latest
   #   outputs:
   #     matrix: ${{ steps.set-matrix.outputs.matrix }}
