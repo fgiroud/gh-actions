@@ -9,6 +9,7 @@ jobs:
       matrix:
         browser: ['chrome', 'edge']
         machines: [1, 2, 3]
+    runs-on: ubuntu-latest
     steps:
       - name: ECHO
         run: echo I am running on machine "${{ matrix.machine }}, for browser {{ matrix.browser }}"
